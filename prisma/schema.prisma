@@ -18,7 +18,7 @@ model users {
 
 model laptops {
   id             Int              @id @default(autoincrement())
-  number         Int
+  number         Int              @unique
   status         Boolean
   laptops_status laptops_status[]
 }

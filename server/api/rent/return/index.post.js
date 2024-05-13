@@ -6,25 +6,25 @@ export default defineEventHandler(async (event) => {
 
     const prisma = new PrismaClient()
 
+    const status = await prisma.laptops_status.update({
+        where: {
+            id: body.status_id
+        },
+        data: {
+            active: false,
+            endTime: new Date()
+        }
+
+    })
     const resp = await prisma.laptops.update({
         where: {
-            id: Number(body.id)
+            number: status.laptopsId
         },
         data: {
             status: true
         }
     })
 
-    const status = await prisma.laptops_status.update({
-        where: {
-            id: body.laptop_id
-        },
-        data: {
-            active: false,
-            endTime: new Date()
-        }
-        
-    })
     return resp
 
 })

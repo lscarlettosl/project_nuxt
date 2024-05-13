@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+  <!-- <div class="container mx-auto">
     <div class="flex justify-center py-4 text-2xl font-bold">Ноутбуки в аренде</div>
     <table class="w-full table-auto border-collapse border border-slate-500">
       <thead class="justify-center bg-black text-center text-white">
@@ -27,88 +27,82 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> -->
 
   <div>
-    <UiDatatable
-      @ready="tableRef = $event"
-      :data="laptops"
-      :options="options"
-      :columns="options.columns"
-    >
-      <template #actions>
-        <button @click="rent" class="rounded-md border border-purple-700 bg-purple-500 px-4 py-1">
-          Вернуть
+    <UiDatatable @ready="tableRef = $event" :data="laptops" :options="options" :columns="options.columns">
+      <template #actions="{ cellData }">
+        <button @click="rent(cellData.id)" class="rounded-md border border-purple-700 bg-purple-500 px-4 py-1">
+          Вернуть {{ cellData.id }}
         </button>
       </template>
     </UiDatatable>
   </div>
 </template>
 
-<script setup lang="ts">
-  import type { Config } from "datatables.net";
-  import type DataTableRef from "datatables.net";
+<script setup>
 
-  const options: Config = {
-    language: {
-        url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/ru.json'
+
+const options = {
+  language: {
+    url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/ru.json'
+  },
+  dom: "Q<'flex flex-col lg:flex-row w-full lg:items-start lg:justify-between gap-5 mb-5 lg:pr-1'Bf><'border rounded-lg't><'flex flex-col lg:flex-row gap-5 lg:items-center lg:justify-between pt-3 p-5'li><''p>",
+  autoWidth: true,
+  responsive: true,
+  buttons: [
+    "copy",
+    "csv",
+    "excel",
+    "pdf",
+    "print",
+    {
+      text: "Select all",
+      action: function (dt) {
+        dt.rows().select();
+      },
     },
-    dom: "Q<'flex flex-col lg:flex-row w-full lg:items-start lg:justify-between gap-5 mb-5 lg:pr-1'Bf><'border rounded-lg't><'flex flex-col lg:flex-row gap-5 lg:items-center lg:justify-between pt-3 p-5'li><''p>",
-    autoWidth: true,
-    responsive: true,
-    buttons: [
-      "copy",
-      "csv",
-      "excel",
-      "pdf",
-      "print",
-      {
-        text: "Select all",
-        action: function (e, dt, node, config) {
-          dt.rows().select();
-        },
+  ],
+  columns: [
+    {
+      data: "laptop.number",
+      title: "Номер ноутбука",
+    },
+    { data: "user.name", title: "Студент" },
+    {
+      data: "startTime",
+      title: "Время взятия",
+      render(data) {
+        return new Date(data).toLocaleDateString("ru-ru") + ' ' + new Date(data).toLocaleTimeString("ru-ru");
       },
-    ],
-    columns: [
-      {
-        data: "laptop.number",
-        title: "Номер ноутбука",
-      },
-      { data: "user.name", title: "Студент" },
-      {
-        data: "startTime",
-        title: "Время взятия",
-        render(data) {
-          return new Date(data).toLocaleDateString("ru-ru") + ' ' +new Date(data).toLocaleTimeString("ru-ru");
-        },
-      },
-      {
-        data: null,
-        title: "Вернуть",
-        className: "no-export",
-        searchable: false,
-        orderable: false,
-        name: "actions",
-        render: "#actions",
-        responsivePriority: 1,
-      },
-    ],
-  };
+    },
+    {
+      data: null,
+      title: "Вернуть",
+      className: "no-export",
+      searchable: false,
+      orderable: false,
+      name: "actions",
+      render: "#actions",
+      responsivePriority: 1,
+    },
+  ],
+};
 
 
-  const tableRef = shallowRef<InstanceType<typeof DataTableRef<any[]>> | null>(null);
+const tableRef = shallowRef(null);
 
-  const { data: laptops } = await useFetch("/api/admin/data");
-  const route = useRoute();
-  const reqData = ref("");
-  async function rent(active) {
-    const { data, pending, error, refresh } = await useFetch("/api/rent/return", {
-      method: "POST",
-      body: {
-        id: route.params.id,
-      },
-    });
+const { data: laptops } = await useFetch("/api/admin/data");
+const route = useRoute();
+const reqData = ref();
+async function rent(id) {
+  const { data, pending, error, refresh } = await useFetch("/api/rent/return", {
+    method: "POST",
+    body: {
+      status_id: id,
+    },
+  });
 
-    reqData.value = data.value;
-  }
+  reqData.value = data.value;
+}
 </script>

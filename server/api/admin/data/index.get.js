@@ -8,6 +8,7 @@ export default defineEventHandler(async (event) => {
       active: true,
     },
     select: {
+      id: true,
       laptopsId: true,
       startTime: true,
       endTime: true,

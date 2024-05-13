@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
 
   const resp = await prisma.laptops.update({
     where: {
-      id: Number(body.id),
+      number: Number(body.id),
     },
     data: {
       status: false,
@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
 
   const status = await prisma.laptops_status.create({
     data: {
-      laptopsId: Number(body.id),
+      laptopsId: resp.id,
       usersId: 1,
       active: true,
     },
