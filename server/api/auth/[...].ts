@@ -5,6 +5,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NuxtAuthHandler({
   // A secret string you define, to ensure correct encryption
+  pages: {
+    signIn: "/authorization",
+  },
   secret: "your-secret-here",
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point
@@ -16,7 +19,7 @@ export default NuxtAuthHandler({
       async authorize(credentials: any) {
         const prisma = new PrismaClient();
 
-        const response = await prisma.users.findFirst({
+        const response = await prisma.users.findFirstOrThrow({
           where: {
             email: credentials?.email,
           },

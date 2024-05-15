@@ -4,12 +4,15 @@
   <TheFooter />
 </template>
 
-<script setup></script>
+<script setup>
+const { data } = useAuth()
+
+</script>
 
 <style>
-  #__nuxt {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
+#__nuxt {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 </style>

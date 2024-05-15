@@ -4,10 +4,9 @@ export default defineNuxtConfig({
   devServer: {
     port: 5000,
   },
-
-  // auth: {
-  //   enableGlobalAppMiddleWare: true
-  // }
+  auth: {
+    globalAppMiddleware: true
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@sidebase/nuxt-auth",
