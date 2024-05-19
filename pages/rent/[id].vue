@@ -1,11 +1,11 @@
 <template>
-  <div v-if="avaible">
+  <div v-if="avaible" class="text-center">
     Вы взяли ноутбук - {{ $route.params.id }}
     <button @click="rent" class="bg-red-400 p-4">Взать ноутбук</button>
-    <p v-if="reqData">Запрос отработал</p>
+    <p v-if="reqData" class="text-center">Запрос отработал</p>
   </div>
   <div v-else>
-    <p>Ноутбук уже взяли</p>
+    <p class="text-center">Ноутбук уже взяли</p>
   </div>
 </template>
 

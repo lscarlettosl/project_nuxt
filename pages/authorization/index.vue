@@ -9,29 +9,41 @@
         type="submit">
         Войти
       </button>
+      <p v-if="showErrorMessage" class="text-red-500">Неправильный логин или пароль</p>
     </form>
   </div>
 </template>
 
-
 <script setup>
-
+const router = useRouter()
+const route = useRoute()
 const { signIn } = useAuth()
 definePageMeta({
   auth: {
     unauthenticatedOnly: true,
-
   },
 })
 
 const email = ref('')
 const password = ref('')
+const showErrorMessage = ref(false)
 
-function login() {
-  signIn('credentials', {
-    email: email.value,
-    password: password.value,
-    redirect: false
-  })
+async function login(e) {
+  try {
+    e.preventDefault()
+    const response = await signIn('credentials', {
+      email: email.value,
+      password: password.value,
+      redirect: false,
+    })
+    if (!response?.error) {
+      window.location.href = route.query.callbackUrl
+    } else {
+      showErrorMessage.value = true
+    }
+  } catch (error) {
+
+  }
 }
+
 </script>
