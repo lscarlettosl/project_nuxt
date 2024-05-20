@@ -38,5 +38,5 @@ export default defineEventHandler(async (event) => {
       active: true,
     },
   });
-  return resp;
+  return 'ok';
 });
