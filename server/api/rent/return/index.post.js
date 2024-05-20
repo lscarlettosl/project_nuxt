@@ -12,10 +12,11 @@ export default defineEventHandler(async (event) => {
         },
         data: {
             active: false,
-            endTime: new Date()
+            endTime: new Date(),
+            returnedByUserId: body.userId
         }
-
     })
+
     const resp = await prisma.laptops.update({
         where: {
             number: status.laptopsId
@@ -28,4 +29,3 @@ export default defineEventHandler(async (event) => {
     return resp
 
 })
-
