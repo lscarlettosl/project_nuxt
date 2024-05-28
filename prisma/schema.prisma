@@ -32,4 +32,5 @@ model laptops_status {
   user      users     @relation(fields: [usersId], references: [id])
   usersId   Int
   active    Boolean
+  hash      String?
 }

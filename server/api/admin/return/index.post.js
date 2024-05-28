@@ -9,23 +9,19 @@ export default defineEventHandler(async (event) => {
     const session = await getServerSession(event)
 
 
-    const getRent = await prisma.laptops_status.findFirst({
+    const getUser = await prisma.laptops_status.findFirst({
         where: {
-            hash: body.hash
+            id: Number(body.status_id)
         }
     })
 
-    if (!getRent) {
-        return 'Wrong hash'
-    }
-
-    if (getRent.usersId != session.user.id) {
+    if (getUser.usersId != session.user.id) {
         return 'Wrong user returns'
     }
 
     const status = await prisma.laptops_status.update({
         where: {
-            id: getRent.id
+            id: Number(body.status_id)
         },
         data: {
             active: false,

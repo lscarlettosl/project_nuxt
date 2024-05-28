@@ -59,7 +59,6 @@ const options = {
 const tableRef = shallowRef(null);
 
 const { data: laptops } = await useFetch("/api/admin/history");
-console.log(laptops.value);
 const route = useRoute();
 const reqData = ref();
 

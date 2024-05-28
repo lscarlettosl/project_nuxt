@@ -1,8 +1,8 @@
 <template>
   <div v-if="avaible" class="text-center">
     Вы взяли ноутбук - {{ $route.params.id }}
-    <button @click="rent" class="bg-red-400 p-4">Взать ноутбук</button>
-    <p v-if="reqData" class="text-center">Запрос отработал</p>
+    <button @click="rent" class="bg-red-400 p-4">Взять ноутбук</button>
+    <p v-if="status" class="text-center">{{ status }}</p>
   </div>
   <div v-else>
     <p class="text-center">Ноутбук уже взяли</p>
@@ -11,6 +11,7 @@
 
 <script setup>
 const route = useRoute();
+const status = ref('')
 
 const { data: avaible } = await useFetch('/api/rent/checkAvaibility', {
   method: 'POST',
@@ -19,7 +20,7 @@ const { data: avaible } = await useFetch('/api/rent/checkAvaibility', {
   },
 })
 
-const reqData = ref("");
+
 async function rent(active) {
   const { data, pending, error, refresh } = await useFetch("/api/rent/take", {
     method: "POST",
@@ -28,6 +29,11 @@ async function rent(active) {
     },
   });
 
-  reqData.value = data.value;
+  if (data.value === 'Laptop limit error') {
+    status.value = 'Вы не можете взять больше 3 ноутбуков!'
+  }
+  else if (data.value === 'ok') {
+    status.value === 'Запрос отработал'
+  }
 }
 </script>

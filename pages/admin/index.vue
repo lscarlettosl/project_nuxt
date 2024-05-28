@@ -2,15 +2,57 @@
   <div>
     <UiDatatable @ready="tableRef = $event" :data="laptops" :options="options" :columns="options.columns">
       <template #actions="{ cellData }">
-        <button @click="rent(cellData.id)" class="rounded-md border border-purple-700 bg-purple-500 px-4 py-1">
+        <button @click="openModal(cellData.hash)" class="rounded-md border border-purple-700 bg-purple-500 px-4 py-1">
           Вернуть
         </button>
       </template>
     </UiDatatable>
+
+    <div>
+      <div v-if="showModal"
+        class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+        <div class="modal-content border-5 border-black bg-white p-4 rounded-lg text-center">
+          <img :src="qr" alt="">
+          <h3 class="text-center font-bold">Отсканируй QR-код, чтобы вернуть ноутбук</h3>
+          <button @click="closeModal" class="mt-4 px-4 py-2 bg-purple-500 text-white rounded-md">Закрыть</button>
+        </div>
+      </div>
+    </div>
   </div>
+
 </template>
 
+
+
+
 <script setup>
+import { ref } from 'vue';
+const route = useRoute()
+const qr = ref('')
+
+import QRCode from 'qrcode'
+
+const generateQR = async text => {
+  try {
+    const code = await QRCode.toDataURL(text)
+    qr.value = code
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+const showModal = ref(false);
+
+function openModal(hash) {
+  generateQR('https://3g0tqx7d-5000.euw.devtunnels.ms/return/' + hash)
+  showModal.value = true;
+}
+
+function closeModal() {
+  showModal.value = false;
+}
+
+
 const options = {
   language: {
     url: 'https://cdn.datatables.net/plug-ins/2.0.7/i18n/ru.json'
@@ -61,8 +103,7 @@ const options = {
 const tableRef = shallowRef(null);
 
 const { data: laptops } = await useFetch("/api/admin/data");
-console.log(laptops.value);
-const route = useRoute();
+
 const reqData = ref();
 
 async function rent(id) {

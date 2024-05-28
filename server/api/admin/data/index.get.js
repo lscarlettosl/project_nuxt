@@ -14,11 +14,13 @@ export default defineEventHandler(async (event) => {
       endTime: true,
       usersId: true,
       active: true,
+      hash: true,
       user: {
         select: {
           name: true,
         },
       },
+
       laptop: {
         select: {
           number: true,

@@ -1,1 +1,1 @@
-<template>aaa</template>
+<template>Тест</template>
