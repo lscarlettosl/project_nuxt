@@ -1,7 +1,7 @@
 <template>
   <header class="bg-purple-700">
-    <div class="my-auto flex items-center justify-between max-w-[1800px] ">
-      <img class="w-[200px] h-[100px]" src="public/images/logo.png"><img>
+    <div class="xm:text-[50px]my-auto flex max-w-[1800px] items-center justify-between">
+      <img class="h-[100px] w-[200px]" src="public/images/logo.png" /><img />
       <NuxtLink to="/authorization">Главная</NuxtLink>
       <NuxtLink to="/admin">Админ</NuxtLink>
       <NuxtLink to="/profile">Профиль</NuxtLink>
@@ -13,5 +13,5 @@
 </template>
 
 <script setup>
-const { signOut } = useAuth()
+  const { signOut } = useAuth();
 </script>

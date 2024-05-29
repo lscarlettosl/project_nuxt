@@ -1,11 +1,11 @@
 <template>
     <div v-if="laptops">
 
-        Вы возвозравщаете нубук с хэшем - {{ $route.params.hash }}
-        <p>Вы уверены что хотите вернуть ноутбук № {{ laptops.laptop.number }}</p>
-        <div>
+        <!-- Вы возвращаете ноутбук с хэшом - {{ $route.params.hash }} -->
+        <p>Нажмите на кнопку чтобы вернуть ноутбук № {{ laptops.laptop.number }}</p>
+        <div class="flex justify-center ">
             <button @click="rent($route.params.hash)" v-if="!reqData"
-                class="rounded-md border border-purple-700 bg-purple-500 px-4 py-1">
+                class=" rounded-md border border-purple-700 bg-purple-500 px-4 py-1">
                 Вернуть
             </button>
             <p v-else>Ноутбук возвращен</p>
