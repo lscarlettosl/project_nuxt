@@ -11,16 +11,17 @@ export default defineEventHandler(async (event) => {
 
     const getRent = await prisma.laptops_status.findFirst({
         where: {
-            hash: body.hash
+            hash: body.hash,
+            active: true
         }
     })
 
     if (!getRent) {
-        return 'Wrong hash'
+        return 'Неверная ссылка'
     }
 
     if (getRent.usersId != session.user.id) {
-        return 'Wrong user returns'
+        return 'Ноутбук должен вернуть тот пользователь, который его взял'
     }
 
     const status = await prisma.laptops_status.update({
@@ -42,6 +43,7 @@ export default defineEventHandler(async (event) => {
         }
     })
 
-    return resp
-
+    if (resp) {
+        return "Ноутбук вернулся. Теперь вы можете закрыть эту страницу"
+    }
 })

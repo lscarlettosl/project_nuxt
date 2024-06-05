@@ -30,6 +30,7 @@ export default NuxtAuthHandler({
             id: response!.id,
             email: response!.email,
             role: response!.role,
+            name: response!.name,
           };
         }
 
@@ -43,6 +44,7 @@ export default NuxtAuthHandler({
         token.id = user.id;
         token.email = user.email;
         token.role = user.role;
+        token.name = user.name;
       }
 
       return token;
@@ -52,6 +54,7 @@ export default NuxtAuthHandler({
         id: token.id as number,
         email: token.email!,
         role: token.role as string,
+        name: token.name as string,
       };
 
       return session;

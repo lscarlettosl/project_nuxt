@@ -1,43 +1,23 @@
 <template>
-    <div v-if="laptops">
-
-        <!-- Вы возвращаете ноутбук с хэшом - {{ $route.params.hash }} -->
-        <p>Нажмите на кнопку чтобы вернуть ноутбук № {{ laptops.laptop.number }}</p>
-        <div class="flex justify-center ">
-            <button @click="rent($route.params.hash)" v-if="!reqData"
-                class=" rounded-md border border-purple-700 bg-purple-500 px-4 py-1">
-                Вернуть
-            </button>
-            <p v-else>Ноутбук возвращен</p>
-        </div>
-    </div>
-    <div v-else>
-        <p>Аренда не найдена</p>
+    <div class="flex-col flex items-center justify-center ">
+        <p class="text-center w-[80%] max-[50px]">{{ reqData }}</p>
+        <NuxtLink to="/profile" class="text-center rounded-md  border text-white bg-[#921CB0] px-4 py-1 mt-6">На главную
+        </NuxtLink>
     </div>
 </template>
 
 <script setup>
 const route = useRoute()
-const { data: laptops } = await useFetch("/api/getLaptopNumber", {
-    method: 'POST',
-    body: {
-        hash: route.params.hash
-    }
-});
 const reqData = ref();
-
-async function rent(hash) {
-    const { data } = await useFetch("/api/rent/return", {
+async function returnLaptop() {
+    const { data: laptop_return } = await useFetch("/api/rent/return", {
         method: "POST",
         body: {
-            hash: hash,
-        },
-
+            hash: route.params.hash,
+        }
     })
-    if (!laptops) {
-        return 'Ноутбук не найден'
-    }
-
-    reqData.value = data.value;
+    reqData.value = laptop_return.value;
 }
+
+await returnLaptop()
 </script>
