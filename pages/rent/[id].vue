@@ -1,6 +1,6 @@
 <template>
 
-  <div v-if="avaible" class="mx-auto flex items-center justify-center">
+  <div v-if="avaible" class="mx-auto flex flex-col gap-y-5 items-center justify-center">
     <p class="text-center w-[80%] max-[50px]">Нажмите чтобы взять ноутбук № - {{ $route.params.id }}</p>
     <button @click="rent" class="rounded-md bg-[#921CB0] px-8 py-3 text-white">Взять
       ноутбук</button>

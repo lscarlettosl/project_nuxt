@@ -11,7 +11,7 @@
             <div class="ml-5 text-xl" id="tableButtons"></div>
             <div class="flex flex-col gap-y-6 ">
 
-                <NuxtLink class="text-xl md:text-xl lg:text-xl flex gap-x-[18px] ml-5 " to="/authorization"><img
+                <NuxtLink class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl" to="/authorization"><img
                         class="w-5 font-bold" src="/images/home.svg" alt="">Главная
                 </NuxtLink>
 
