@@ -1,5 +1,4 @@
 <template>
-
     <button type="button" @click="toggleMenu" :class="{ 'is-active': menuOpen }"
         class="menu-toggle md:hidden fixed right-5 top-5">Menu</button>
     <aside id="asidee" :class="{ 'hidden': !menuOpen, 'md:w-80': menuOpen }"
@@ -11,54 +10,44 @@
             <div class="ml-5 text-xl" id="tableButtons"></div>
             <div class="flex flex-col gap-y-6 ">
 
-                <NuxtLink class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl" to="/authorization"><img
-                        class="w-5 font-bold" src="/images/home.svg" alt="">Главная
-                </NuxtLink>
-
-                <NuxtLink class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl" to="/admin"><img
-                        src="/images/export.svg" alt="">Админ
-                </NuxtLink>
-
-                <NuxtLink class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl" to="/profile"><img
-                        src="/images/profile.svg" class="w-5" alt="">Профиль
-                </NuxtLink>
-
-                <NuxtLink class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl" to="/rent/1"><img
-                        src="/images/export.svg" alt="">Взять
-                    ноут 1
+                <NuxtLink @click="menuOpen = false" class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl"
+                    to="/authorization">
+                    <img class="w-5 font-bold" src="/images/home.svg" alt="">Главная
                 </NuxtLink>
 
             </div>
             <p class="mb-5 mt-7 text-slate-400 text-xl md:text-xl lg:text-lg">Другое</p>
             <div class="flex flex-col gap-y-6">
 
-                <NuxtLink class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl" to="/admin/history"><img
-                        src="/images/history.svg" alt="">История ноутбуков</NuxtLink>
-                <button class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl text-red-600"
-                    @click="signOut()"><img src="/images/exit.svg" alt="">Выйти</button>
+                <NuxtLink v-if="data.user.role === 'admin'" class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl"
+                    to="/admin/history">
+                    <img src="/images/history.svg" alt="">История ноутбуков
+                </NuxtLink>
+                <button class="flex gap-x-[18px] ml-5 text-xl md:text-xl lg:text-xl text-red-600" @click="signOut()"><img
+                        src="/images/exit.svg" alt="">Выйти</button>
             </div>
         </div>
         <div>
 
         </div>
     </aside>
-
 </template>
 
 <script setup>
+import { useAuth } from '#imports';
+import { ref, onMounted } from 'vue';
 
-
-
-
-const { signOut } = useAuth();
+const isMobile = ref(false);
 const menuOpen = ref(false);
-const { signIn } = useAuth();
-import { ref } from 'vue';
 
 const toggleMenu = () => {
     menuOpen.value = !menuOpen.value;
 };
+
+const { signOut, data } = useAuth();
+
 </script>
+
 
 
 

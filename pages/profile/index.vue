@@ -1,58 +1,47 @@
 <template>
-    <div class=" mx-auto mt-5 ml-4">
-        <p class="max-w-[80%] text-2xl mt-2 text-center md:max-w-[100%] md:text-4xl  ">Добро пожаловать, {{
-            user.name }}
-            <hr class="md:hidden">
+    <div class="mx-auto mt-14 p-5 md:w-[80%] ">
+        <p class="text-left text-2xl">
+            Добро пожаловать, {{ user.name }}
         </p>
-        <div class="mx-auto">
-            <p class="text-xl">Ваш email: {{ user.email }}</p>
-        </div>
-        <div v-if="taken">
-            <p>Вы взяли ноутбук № - {{ $route.params.id }}</p>
-        </div>
+        <p class="text-left">Ваш email: {{ user.email }}</p>
+        <p class="text-left" v-if="taken">
+            Вы взяли ноутбук № : {{ $route.params.id }}
+        </p>
 
-
-
-
-
-
-        <div class="mt-5 max-w-[80%] md:max-w-[100%] flex flex-col items-center mx-center">
-            <button @click="openModal('takeLaptop')" class="rounded-md border text-white  m-2 bg-[#921CB0] ">
+        <div class="md:flex md:flex-col">
+            <button @click="openModal('takeLaptop')"
+                class="mt-4 rounded-md bg-[#921CB0] w-[100%] md:max-w-[20%] py-1 text-white">
                 Как взять ноутбук?
             </button>
-            <button @click="openModal('returnLaptop')" class="rounded-md border text-white m-2 bg-[#921CB0] ">
+            <button @click="openModal('returnLaptop')"
+                class="mt-4 rounded-md bg-[#921CB0] w-[100%] md:max-w-[20%]  py-1 text-white">
                 Как вернуть ноутбук?
             </button>
+        </div>
 
-            <div v-if="modalOpen" class="modal">
-                <div class="modal-content">
-                    <button class="text-2xl mt-5" @click="closeModal">𐌢</button>
-                    <p v-if="modalType === 'takeLaptop'"
-                        class="text-xl max-w-[90%] md:max-w-[100%] border bg-[#E6E8EA] border-black rounded-md p-2">
-                        Для того
-                        чтобы взять
-                        ноутбук, вам необходимо пройти в аудиторию 8-613, после чего взять ноутбук и отсканировать
-                        Qr-код. После этих действий вас перенаправит в окно авторизации и вам будет необходимо войти в
-                        профиль,
-                        затем у вас появится окно где будет кнопка "Взять ноутбук"</p>
-                    <p v-if="modalType === 'returnLaptop'"
-                        class="text-xl max-w-[90%] md:max-w-[100%] border bg-[#E6E8EA] border-black rounded-md p-2">
-                        Для
-                        возврата
-                        ноутбука вам необходимо пройти в кабинет 8-613 и на компьютере администратора нажать на кнопку
-                        "Вернуть" рядом с Вашим номером ноутбука. После чего необходимо отсканировать QR-код и Вас
-                        перенаправит на
-                        страницу возврата ноутбука.</p>
-                </div>
+        <div v-if="modalOpen" class="modal">
+
+            <div class="modal-content">
+
+                <button class="text-4xl text-red-600" @click="closeModal">𐌢</button>
+
+                <p v-if="modalType === 'takeLaptop'"
+                    class=" mx-auto border bg-[#E6E8EA] md:max-w-[50%] border-black rounded-md p-2">
+                    Для того чтобы взять ноутбук, вам необходимо пройти в аудиторию 8-613, после чего взять ноутбук и
+                    отсканировать Qr-код. После этих действий вас перенаправит в окно авторизации и вам будет необходимо
+                    войти в профиль, затем у вас появится окно где будет кнопка "Взять ноутбук"
+                </p>
+                <p v-if="modalType === 'returnLaptop'"
+                    class=" mx-auto border bg-[#E6E8EA] md:max-w-[50%] border-black rounded-md p-2">
+                    Для возврата ноутбука вам необходимо пройти в кабинет 8-613 и на компьютере администратора нажать на
+                    кнопку "Вернуть" рядом с Вашим номером ноутбука. После чего необходимо отсканировать QR-код и Вас
+                    перенаправит на страницу возврата ноутбука.
+                </p>
             </div>
         </div>
     </div>
-
-
-
-
 </template>
-
+  
 <script setup>
 
 import { ref } from 'vue';

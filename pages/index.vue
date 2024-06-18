@@ -1,8 +1,14 @@
-<template>
-    <div class="mx-auto flex items-center p-5 text-4xl">
-        <p class="text-center">
-            Добро пожаловать в IThub desktops.
-            <img class="bg-black border-4 border-black mx-auto mt-2" src="/images/LOGO_ROSTOV.svg" alt="">
-        </p>
-    </div>
-</template>
+
+<script setup>
+import { useRouter } from 'vue-router';
+import { useAuth } from '#imports';
+
+const router = useRouter();
+const { data } = useAuth();
+
+if (data.value.user.role === 'admin') {
+    router.push({ path: '/admin' });
+} else {
+    router.push({ path: '/profile' });
+}
+</script>

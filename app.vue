@@ -8,6 +8,15 @@
 
 <script setup>
 const { data } = useAuth();
+
+useHead({
+  title: 'IThub desktops'
+})
+
+
+useSeoMeta({
+  ogImage: '/logo.png'
+})
 </script>
 
 <style>

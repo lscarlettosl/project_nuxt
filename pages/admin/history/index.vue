@@ -1,6 +1,6 @@
 <template>
   <div class="flex-1 ml-8">
-    <div class="mt-5 pr-[29px]">
+    <div class="pr-[29px]">
       <UiDatatable @ready="prepareTable($event)" :data="laptops" :options="options" :columns="options.columns">
       </UiDatatable>
     </div>
