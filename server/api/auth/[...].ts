@@ -2,7 +2,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NuxtAuthHandler } from "#auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import { default as bcrypt } from 'bcryptjs'
+import mysql, { RowDataPacket } from 'mysql2/promise'
 export default NuxtAuthHandler({
   // A secret string you define, to ensure correct encryption
   pages: {
@@ -19,18 +20,23 @@ export default NuxtAuthHandler({
       async authorize(credentials: any) {
         const prisma = new PrismaClient();
 
+
+
         const response = await prisma.users.findFirstOrThrow({
           where: {
             email: credentials?.email,
           },
         });
 
-        if (credentials?.password === response?.password) {
+
+        const correctPassword = await bcrypt.compare(credentials.password!, response.password!)
+
+        if (correctPassword) {
           return {
             id: response!.id,
             email: response!.email,
             role: response!.role,
-            name: response!.name,
+            name: response!.first_name + ' ' + response.last_name,
           };
         }
 

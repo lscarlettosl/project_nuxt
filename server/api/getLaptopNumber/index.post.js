@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
             hash: true,
             user: {
                 select: {
-                    name: true,
+                    last_name: true,
                 },
             },
 

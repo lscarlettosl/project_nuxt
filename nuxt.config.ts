@@ -2,10 +2,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   devServer: {
-    port: 5000,
+    port: 3000,
   },
   auth: {
     globalAppMiddleware: true,
+    baseURL: 'https://laptops.ithub-rostov.ru/api/auth'
   },
   modules: ["@nuxtjs/tailwindcss", "@sidebase/nuxt-auth", "@nuxtjs/google-fonts"],
 

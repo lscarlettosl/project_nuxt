@@ -67,7 +67,7 @@ function checkStatus(hash) {
 }
 
 function openModal(hash) {
-  generateQR("https://3g0tqx7d-5000.euw.devtunnels.ms/return/" + hash);
+  generateQR("https://laptops.ithub-rostov.ru/return/" + hash);
   showModal.value = true;
   checkStatus(hash)
 }
@@ -88,7 +88,7 @@ const options = {
       data: "laptop.number",
       title: "Номер ноутбука",
     },
-    { data: "user.name", title: "Студент" },
+    { data: "user.last_name", title: "Студент" },
     {
       data: "startTime",
       title: "Время взятия",

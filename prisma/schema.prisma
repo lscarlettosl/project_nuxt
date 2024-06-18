@@ -1,19 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "mysql"
   url      = env("DATABASE_URL")
-}
-
-model users {
-  id             Int              @id @default(autoincrement())
-  email          String
-  name           String
-  password       String?
-  role           String?          @default("user")
-  laptops_status laptops_status[]
 }
 
 model laptops {
@@ -25,12 +17,26 @@ model laptops {
 
 model laptops_status {
   id        Int       @id @default(autoincrement())
-  laptop    laptops   @relation(fields: [laptopsId], references: [id])
   laptopsId Int
   startTime DateTime  @default(now())
   endTime   DateTime?
-  user      users     @relation(fields: [usersId], references: [id])
-  usersId   Int
   active    Boolean
   hash      String?
+  laptop    laptops   @relation(fields: [laptopsId], references: [id])
+  user      users?    @relation(fields: [usersId], references: [id])
+  usersId   Int?
+
+  @@index([laptopsId], map: "laptops_status_laptopsId_fkey")
+}
+
+view users {
+  id            Int              @id @default(0)
+  first_name    String
+  middle_name   String
+  last_name     String
+  group         String
+  email         String
+  password      String
+  role          String           @default("user")
+  laptop_status laptops_status[]
 }

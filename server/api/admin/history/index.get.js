@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
             active: true,
             user: {
                 select: {
-                    name: true,
+                    last_name: true,
                 },
             },
             laptop: {

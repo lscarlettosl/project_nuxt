@@ -1,0 +1,30 @@
+services:
+
+  laptops_ithub_nuxt_app:
+    build: .
+    container_name: laptops_ithub_nuxt_app
+    env_file:
+      - .env
+    restart: unless-stopped
+    network_mode: host
+    # ports:
+    #   - 3001:3000
+    # db:
+    #   image: mysql
+    #   restart: always
+    #   environment:
+    #     MYSQL_ROOT_PASSWORD: 1nQg6RuU07H1
+    #     MYSQL_DATABASE: ithub_laptops
+    #     MYSQL_USER: ithub_laptops_admin
+    #     MYSQL_PASSWORD: 1nQg6RuU07H1
+    #   ports:
+    #     - 3311:3312
+
+    # admin:
+    #   image: phpmyadmin
+    #   restart: always
+    #   environment:
+    #     PMA_HOST: db
+    #     MYSQL_ROOT_PASSWORD: 1nQg6RuU07H1
+    #   ports:
+    #     - 8080:80
